@@ -17,7 +17,7 @@ extend(THREE);
 const $ = (selector) => document.querySelector(selector);
 const world = $('#campWorld'), canvas = $('#campCanvas'), still = $('#campStill'), loading = $('#campLoading'), status = $('#campStatus'), tag = $('#makerTag');
 const soundButton = $('#campSound'), motionButton = $('#campMotion'), resetButton = $('#campReset'), feature = $('#campFeature');
-const hotspotButtons = [...document.querySelectorAll('[data-camp-action]')];
+const hotspotButtons = [...document.querySelectorAll('[data-camp-action]')], menu = $('.camp-menu');
 const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)');
 const mobile = matchMedia('(max-width:900px)').matches || (navigator.deviceMemory || 8) <= 4;
 
@@ -77,13 +77,8 @@ async function boot() {
     status.append(line);
     audio.cue('chat');
     while (status.children.length > 4) status.firstElementChild.remove();
-    const chatting = () => $('#camp').classList.toggle('chatting', status.children.length > 0);
-    chatting();
     setTimeout(() => line.classList.add('fade'), 6000);
-    setTimeout(() => {
-      line.remove();
-      chatting();
-    }, 6700);
+    setTimeout(() => line.remove(), 6700);
   };
 
   function action(kind) {
@@ -152,6 +147,13 @@ async function boot() {
       tag.style.left = p.x + 'px';
       tag.style.top = p.y - 11 + 'px';
     }
+    // On wide screens the chat sits on the open floor just left of Vaskel's log, growing upward from there,
+    // and never slides under the menu.
+    if (size.width > 900) {
+      const p = project(anchor.set(-2.2, 0, 3.1)), menuRight = menu.getBoundingClientRect().right - world.getBoundingClientRect().left;
+      status.style.left = Math.max(p.x, menuRight + 24) + 'px';
+      status.style.bottom = Math.max(24, size.height - p.y) + 'px';
+    } else status.style.left = status.style.bottom = '';
   }
 
   // R3F re-applies defaults for any option a later configure() call omits, so resizes pass the whole config.
