@@ -124,6 +124,7 @@ async function boot() {
 
   // Hotspot buttons and the maker tag follow their 3D anchors every frame.
   const anchor = new THREE.Vector3(), lift = new THREE.Vector3();
+  let chatPlacedFor = '';
   function overlay(camera, size) {
     const project = (point) => {
       const p = point.project(camera);
@@ -148,10 +149,14 @@ async function boot() {
       tag.style.top = p.y - 11 + 'px';
     }
     // On wide screens the chat sits on the open floor just left of Vaskel's log, growing upward from a baseline
-    // level with the bottom of the campfire's front-left corner log, and never slides under the menu.
+    // level with the bottom of the campfire's front-left corner log, and never slides under the menu. It is
+    // placed from the default view once per window size and then stays put while the camera is dragged.
+    const sizeKey = size.width + 'x' + size.height, settled = Math.abs(camp.orbit.yaw) + Math.abs(camp.orbit.pitch) < 0.001;
+    if (!camp.refs.fire || sizeKey === chatPlacedFor || (!settled && chatPlacedFor)) return;
+    chatPlacedFor = sizeKey;
     if (size.width > 900) {
       const left = project(anchor.set(-2.2, 0, 3.1)).x, menuRight = menu.getBoundingClientRect().right - world.getBoundingClientRect().left;
-      const base = camp.refs.fire ? project(anchor.copy(camp.refs.fire.position).add(lift.set(-0.575, 0, 0.575))).y : size.height - 24;
+      const base = project(anchor.copy(camp.refs.fire.position).add(lift.set(-0.575, 0, 0.575))).y;
       status.style.left = Math.max(left, menuRight + 24) + 'px';
       status.style.bottom = Math.max(24, size.height - base) + 'px';
     } else status.style.left = status.style.bottom = '';

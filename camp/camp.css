@@ -48,9 +48,9 @@ body{margin:0;padding:0;font-size:16px}.skip{position:fixed;left:16px;top:-100px
 }
 @media(max-width:360px){.camp-status{top:457px}}
 /* Minecraft-style chat for camp messages */
-.camp-status,.camp-status.on{display:flex;flex-direction:column;align-items:flex-start;gap:0;width:min(400px,32vw);max-width:none;padding:0;background:none;border:0;text-align:left;white-space:normal;opacity:1;transition:none}
+.camp-status,.camp-status.on{display:flex;flex-direction:column;align-items:stretch;gap:0;width:min(400px,32vw);max-width:none;padding:0;background:none;border:0;text-align:left;white-space:normal;opacity:1;transition:none}
 /* Wide screens: main.jsx pins the chat's bottom-left corner to the floor beside Vaskel's log. */
-@media(min-width:901px){.camp-status,.camp-status.on{top:auto;right:auto;transform:none;width:min(400px,30vw)}}
+@media(min-width:901px){.camp-status,.camp-status.on{top:auto;right:auto;transform:none;width:min(470px,35vw)}}
 @media(max-width:900px){.camp-status,.camp-status.on{width:min(360px,calc(100% - 32px));left:16px;transform:none}}
 .mc-line{margin:0;font:15px/1.3 "Minecraft",monospace;color:#fff;text-shadow:2px 2px 0 #3f3f3f;background:rgba(0,0,0,.5);padding:1px 6px 3px;transition:opacity .6s}
 .mc-system{color:#aaa;text-shadow:2px 2px 0 #2a2a2a}
