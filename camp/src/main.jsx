@@ -1,4 +1,4 @@
-// Boots the Lantern Camp: mounts React Three Fiber onto the page's existing <canvas> and wires the HTML
+// Boots the forest camp: mounts React Three Fiber onto the page's existing <canvas> and wires the HTML
 // controls (hotspots, sound, pause, reset, keyboard, dragging) to the shared camp state.
 import { createRoot, extend } from '@react-three/fiber';
 import * as THREE from 'three';
