@@ -4,7 +4,8 @@
   "description": "Vaskel's portfolio camp scene, built with React Three Fiber and bundled to one offline script.",
   "scripts": {
     "build": "node tools/build.mjs",
-    "watch": "node tools/build.mjs --watch"
+    "watch": "node tools/build.mjs --watch",
+    "render:workshop": "node tools/render-workshop.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "8.17.10",

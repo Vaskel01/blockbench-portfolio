@@ -10,8 +10,7 @@ import { logGeometry } from './minecraft.js';
 export const BLOCK_TEXTURES = [
   'grass_block_top', 'grass_block_side', 'dirt', 'coarse_dirt', 'dirt_path_top', 'rooted_dirt', 'podzol_top', 'podzol_side', 'moss_block',
   'stone', 'andesite', 'tuff', 'cobblestone', 'mossy_cobblestone', 'oak_log', 'oak_log_top', 'spruce_log', 'dark_oak_log', 'birch_log',
-  'stripped_oak_log', 'stripped_oak_log_top', 'oak_leaves', 'dark_oak_leaves', 'birch_leaves', 'spruce_leaves', 'azalea_leaves',
-  'flowering_azalea_leaves', 'vine', 'pink_petals', 'barrel_side', 'barrel_top', 'short_grass', 'fern', 'tall_grass_bottom', 'tall_grass_top',
+  'stripped_oak_log', 'stripped_oak_log_top', 'oak_leaves', 'dark_oak_leaves', 'birch_leaves', 'spruce_leaves', 'vine', 'pink_petals', 'barrel_side', 'barrel_top', 'short_grass', 'fern', 'tall_grass_bottom', 'tall_grass_top',
   'large_fern_bottom', 'large_fern_top', 'poppy', 'dandelion', 'cornflower', 'azure_bluet', 'oxeye_daisy', 'sweet_berry_bush_stage3',
   'red_mushroom', 'brown_mushroom',
 ];
@@ -196,7 +195,7 @@ export function buildWorld(images, { mobile }) {
     darkLog: texture('dark_oak_log'), birchLog: texture('birch_log'), stripped: texture('stripped_oak_log'), strippedTop: texture('stripped_oak_log_top'),
     barrel: texture('barrel_side'), barrelTop: texture('barrel_top'),
     leaf: texture('oak_leaves', FOLIAGE), darkLeaf: texture('dark_oak_leaves', FOLIAGE), birchLeaf: texture('birch_leaves', '#80a755'),
-    pine: texture('spruce_leaves', '#619961'), azalea: texture('azalea_leaves'), bloom: texture('flowering_azalea_leaves'),
+    pine: texture('spruce_leaves', '#619961'),
     vine: texture('vine', FOLIAGE), petals: texture('pink_petals'),
   };
 
@@ -224,12 +223,9 @@ export function buildWorld(images, { mobile }) {
     darkLog: mat(tex.darkLog), birchLog: mat(tex.birchLog), barrel: mat(tex.barrel), barrelTop: mat(tex.barrelTop),
     leaf: foliage(tex.leaf, '#ffffff', 0.1), leafDark: foliage(tex.leaf, '#a9bf93', 0.06), darkLeaf: foliage(tex.darkLeaf, '#c4d0b4', 0.07),
     birchLeaf: foliage(tex.birchLeaf, '#ffffff', 0.1), pine: foliage(tex.pine, '#ffffff', 0.08), pineDark: foliage(tex.pine, '#a9bcae', 0.05),
-    azalea: foliage(tex.azalea, '#ffffff', 0.1), bloom: foliage(tex.bloom, '#ffffff', 0.14),
     vine: mat(tex.vine, '#ffffff', { alphaTest: 0.4, side: THREE.DoubleSide, emissiveMap: tex.vine, emissive: '#ffffff', emissiveIntensity: 0.08 }),
     fringe: mat(fringeTexture(tex.grass), '#ffffff', { alphaTest: 0.5, side: THREE.DoubleSide }),
     mossFringe: mat(fringeTexture(tex.moss), '#ffffff', { alphaTest: 0.5, side: THREE.DoubleSide }),
-    iron: mat(null, '#303c43', { metalness: 0.55, roughness: 0.65 }),
-    lantern: mat(null, '#ffdc93', { emissive: '#ffc279', emissiveIntensity: 3 }),
   };
   const ROCK = ['stone', 'stone', 'andesite', 'andesite', 'tuff', 'cobble', 'mossy'];
 
@@ -262,7 +258,7 @@ export function buildWorld(images, { mobile }) {
       }
     }
   }
-  const oakPick = (dy, r) => (dy < 0 ? mats.leafDark : r() < 0.18 ? mats.leafDark : r() < 0.05 ? mats.bloom : mats.leaf);
+  const oakPick = (dy, r) => (dy < 0 || r() < 0.18 ? mats.leafDark : mats.leaf);
   // Each tree group sits on the centre of its first trunk block, so whole-number offsets are block centres.
   const treeGroup = (x, z) => {
     const g = new THREE.Group();
@@ -338,18 +334,10 @@ export function buildWorld(images, { mobile }) {
     }
     leafBlob(g, 0.5, height + 0.5, 0.5, 3.6 * size, 1.6 * size, 3.6 * size, r, (dy, rr) => (dy < 0 || rr() < 0.2 ? mats.leafDark : mats.darkLeaf));
   }
-  // Azalea bush: a low mound of plain and flowering azalea leaves sitting right on the ground.
-  function azalea(x, z, size = 1) {
-    const g = treeGroup(x, z), r = rng(x * 19 + z * 83 + 1);
-    take(x, z);
-    leafBlob(g, 0, 0.6, 0, 1.6 * size, 1.1 * size, 1.6 * size, r, (dy, rr) => (dy < -1 ? null : rr() < 0.3 ? mats.bloom : mats.azalea));
-  }
-
-  // Hero trees frame the clearing on both sides; azaleas fill the understorey at its edge.
+  // Hero trees frame the clearing on both sides.
   bigOak(-10, 1, 1.25);
   bigOak(13, -5, 1.1);
   bigOak(-12, -13, 1);
-  [[-7, -2, 1], [9, -3, 0.9], [-9, -7, 0.9], [11, 2, 1], [-6, 5, 0.9], [6, -9, 0.8]].forEach((a) => azalea(...a));
   // The woodland: groves on a jittered grid, thinning with distance and kept to what the camera can see.
   for (let gx = -44; gx <= 44; gx += 4) {
     for (let gz = -60; gz <= 16; gz += 4) {
@@ -425,19 +413,6 @@ export function buildWorld(images, { mobile }) {
   barrel.rotation.y = -0.3;
   barrel.castShadow = barrel.receiveShadow = true;
   group.add(barrel);
-
-  // A trail leads off into the woods, its lanterns glowing as soft lights between the trunks.
-  for (const [x, z] of [[-3, -8], [2, -13], [-4, -20]]) {
-    const y = H(x, z);
-    box(0.12, 1.1, 0.12, x, y + 0.55, z, mats.log);
-    const g = new THREE.Group();
-    g.position.set(x, y + 1.15, z);
-    group.add(g);
-    box(0.26, 0.31, 0.26, 0, 0, 0, mats.lantern, g);
-    box(0.36, 0.07, 0.36, 0, -0.2, 0, mats.iron, g);
-    box(0.36, 0.09, 0.36, 0, 0.21, 0, mats.iron, g);
-    halo(0, 0, 0, 0.8, '#ffd18c', g);
-  }
 
   // --- Terrain surface: what tops each column, blending palettes the way builders do.
   const podzolNear = (x, z) => shade.some(([sx, sz]) => (x - sx) ** 2 + (z - sz) ** 2 < 7 + hash(x, z, 64) * 5);

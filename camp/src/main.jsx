@@ -75,9 +75,15 @@ async function boot() {
     line.className = 'mc-line' + (speaker ? '' : ' mc-system');
     line.textContent = speaker ? `<${speaker}> ${message}` : message;
     status.append(line);
+    audio.cue('chat');
     while (status.children.length > 4) status.firstElementChild.remove();
+    const chatting = () => $('#camp').classList.toggle('chatting', status.children.length > 0);
+    chatting();
     setTimeout(() => line.classList.add('fade'), 6000);
-    setTimeout(() => line.remove(), 6700);
+    setTimeout(() => {
+      line.remove();
+      chatting();
+    }, 6700);
   };
 
   function action(kind) {

@@ -7,7 +7,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, write
 import { join } from 'node:path';
 
 const SITE = [
-  'index.html', 'portfolio.css', 'portfolio.js', 'renders', 'vendor', 'assets/minecraft/SOURCES.md',
+  'index.html', 'store.html', 'portfolio.css', 'portfolio.js', 'renders', 'vendor', 'assets/minecraft/SOURCES.md',
   'camp/scene.bundle.js', 'camp/scene.bundle.LICENSES.txt', 'camp/camp.css', 'camp/fallback.png', 'camp/icon.svg',
 ];
 

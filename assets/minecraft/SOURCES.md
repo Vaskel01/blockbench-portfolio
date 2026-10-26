@@ -9,6 +9,7 @@ Minecraft Java Edition 1.21.1 textures, © Mojang Studios / Microsoft, extracted
 - Entity texture (entity/chest/, from assets/minecraft/textures/entity/chest/): normal.
 - Environment texture (environment/, from assets/minecraft/textures/environment/): clouds — the cloud layer is built from its pixels.
 - Also block/red_mushroom and block/brown_mushroom.
+- For the workshop render (renders/workshop-vaskel.webp): block/crafting_table_top, crafting_table_front, crafting_table_side, smithing_table_top, smithing_table_front, smithing_table_side, smithing_table_bottom, bookshelf, glass, and item/diamond_sword, iron_axe, blaze_rod, golden_sword, bow, item_frame (from assets/minecraft/textures/item/).
 - Model data: the campfire geometry and UVs in camp/src/minecraft.js follow assets/minecraft/models/block/template_campfire.json; the animation timings follow the campfire_log_lit, campfire_fire, water_still and water_flow .mcmeta files. The chest uses the game's single-chest part layout (bottom, lid and lock boxes).
 
 ## Sounds
@@ -16,7 +17,7 @@ Minecraft Java Edition 1.21.1 textures, © Mojang Studios / Microsoft, extracted
 Minecraft Java Edition 1.21.1 sound effects, © Mojang Studios / Microsoft, downloaded unchanged from the official asset server (resources.download.minecraft.net) using the 1.21.1 asset index, with every file's SHA-1 checked against the index. Which file belongs to which event follows the game's own minecraft/sounds.json.
 
 - Asset index: https://piston-meta.mojang.com/v1/packages/e61ea955de95de1f99d36616a8b46147e9f6f5d7/17.json (SHA-1 e61ea955de95de1f99d36616a8b46147e9f6f5d7)
-- Included (sounds/, from minecraft/sounds/): block/campfire/crackle1–6 (block.campfire.crackle), block/chest/open (block.chest.open), block/chest/close1–3 (block.chest.close), mob/ghast/fireball4 (item.firecharge.use), random/orb (entity.experience_orb.pickup), random/click_stereo (ui.button.click).
+- Included (sounds/, from minecraft/sounds/): block/campfire/crackle1–6 (block.campfire.crackle), block/chest/open (block.chest.open), block/chest/close1–3 (block.chest.close), mob/ghast/fireball4 (item.firecharge.use), random/orb (entity.experience_orb.pickup), random/click_stereo (ui.button.click), random/pop (entity.item.pickup, played when a chat line appears).
 
 ## Skin and libraries
 

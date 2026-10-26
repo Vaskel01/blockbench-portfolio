@@ -190,3 +190,16 @@ button{font:inherit;color:inherit}
 /* toast */
 .toast{--n:4px;position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:80;padding:11px 18px 12px;background:var(--grass);color:var(--grass-ink);font-weight:800;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* home: store teaser, copy beside a render of Vaskel in his workshop */
+.shop-teaser{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center;gap:40px}
+.shop-copy{display:flex;flex-direction:column;gap:14px}
+.shop-copy .label{color:var(--grass)}
+.shop-copy p{font-size:17px;max-width:46ch}
+.shop-shot{--n:8px;display:block;overflow:hidden;background:var(--panel)}
+.shop-shot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.shop-shot:hover img{transform:scale(1.03)}
+.shop-shot:focus-visible{outline:3px solid var(--grass);outline-offset:4px}
+@media (max-width:860px){.shop-teaser{grid-template-columns:minmax(0,1fr);gap:24px}.shop-shot{order:-1}}
+@media (prefers-reduced-motion:reduce){.shop-shot img{transition:none}.shop-shot:hover img{transform:none}}
+

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Store — Vaskel</title><meta name="description" content="Premade Minecraft Java packs by Vaskel: weapons, tools, props and magic staffs, made in Blockbench."><meta property="og:title" content="Store — Vaskel"><meta property="og:description" content="Premade Minecraft Java packs by Vaskel: weapons, tools, props and magic staffs, made in Blockbench."><meta property="og:type" content="website">
+<link rel="icon" href="camp/icon.svg" type="image/svg+xml"><meta name="theme-color" content="#0c1420"><link rel="stylesheet" href="vendor/fonts/fonts.css"><link rel="stylesheet" href="portfolio.css"><link rel="stylesheet" href="camp/camp.css"></head>
+<body><a class="skip" href="#store">Skip to the packs</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="index.html" aria-label="Vaskel, home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7 12 12 3 7Z" fill="#7cc443"/><path d="M3 7 12 12V22L3 17Z" fill="#8a5a36"/><path d="M21 7 12 12V22L21 17Z" fill="#6b4428"/><path d="M3 7 12 12 21 7V9.5L12 14.5 3 9.5Z" fill="#5aa83a"/></svg>VASKEL
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a class="nl hide-md" href="index.html#work">Work</a>
+      <a class="nl" href="store.html" aria-current="page">Store</a>
+      <a class="nl hide-md" href="#buying">How to buy</a>
+      <a class="nl hide-sm" href="index.html#contact">Contact</a>
+      <button class="btn btn-sm btn-primary px" type="button" data-dm-custom>DM me</button>
+    </nav>
+  </div>
+</header>
+<main id="top">
+  <section class="sec sec-alt store-page" id="store">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="label">Store</p>
+          <h1 class="h2">Premade packs</h1>
+          <p class="sec-sub">Ready-made models for Minecraft Java. Message me on Discord to buy, then pay with PayPal, or GCash if you're in the Philippines.</p>
+        </div>
+        <div class="store-side">
+          <p class="paywith"><span class="label">Payment</span><span class="pay px">PayPal</span><span class="pay px">GCash · PH</span></p>
+          <div class="shelf-nav"><button class="btn btn-sm px" type="button" data-shelf="-1" aria-label="Previous packs">←</button><button class="btn btn-sm px" type="button" data-shelf="1" aria-label="More packs">→</button></div>
+        </div>
+      </header>
+      <div class="cards" id="packs" tabindex="0" aria-label="Premade packs, scroll sideways for more"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="buying">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="label">How to buy</p>
+          <h2>From DM to download</h2>
+        </div>
+      </header>
+      <ol class="steps">
+        <li class="step px"><span class="step-n">1</span><h3>Pick a pack</h3><p>Check what's in it and make sure it fits your project. If you need something changed, ask me first.</p></li>
+        <li class="step px"><span class="step-n">2</span><h3>DM me on Discord</h3><p>Tap "DM to buy", copy the message and send it to <b class="mono" data-dc-user></b>.</p></li>
+        <li class="step px"><span class="step-n">3</span><h3>Pay</h3><p>I'll reply with payment details. PayPal works anywhere, and GCash works in the Philippines.</p></li>
+        <li class="step px"><span class="step-n">4</span><h3>Get your files</h3><p>I send the files in your Discord DMs once the payment comes through.</p></li>
+      </ol>
+      <div class="terms">
+        <div class="term px"><p class="label ok">You can</p><ul class="okl"><li>Use the models on your server, map or resource pack</li><li>Retexture, recolor and edit them</li></ul></div>
+        <div class="term px"><p class="label no">Please don't</p><ul class="nol"><li>Resell or share the files, edited or not</li><li>Claim the models as your own work</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+</main><footer class="foot">
+  <div class="wrap foot-in">
+    <span>© 2026 Vaskel · Custom Minecraft models made in Blockbench</span>
+    <nav class="foot-links" aria-label="Elsewhere">
+      <a data-ig href="#" target="_blank" rel="noopener">Instagram</a>
+      <a data-sf href="#" target="_blank" rel="noopener">Sketchfab</a>
+      <a data-fiverr href="#" target="_blank" rel="noopener">Fiverr</a>
+      <a href="index.html#contact">Discord</a>
+    </nav>
+    <p class="legal">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-scrim" data-close></div>
+  <div class="panel px" id="panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></div>
+</div>
+<div class="toast px" id="toast" role="status" aria-live="polite"></div>
+
+<script src="portfolio.js"></script>
+</body></html>

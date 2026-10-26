@@ -114,7 +114,9 @@ document.addEventListener('click', e => {
 /* ---------- portfolio: each piece in its Sketchfab viewer (or its render when it has none) ---------- */
 // Viewers show Sketchfab's own poster and play button and only start their 3D view when clicked.
 const sfEmbed = id => `https://sketchfab.com/models/${encodeURIComponent(id)}/embed?ui_theme=dark&dnt=1&ui_hint=0&ui_watermark_link=0`;
-$('#gallery').innerHTML = WORK.map((w, i) => w.sketchfab
+// The portfolio lives on the home page and the store on store.html; each block only runs where its section is.
+const gallery = $('#gallery'), packs = $('#packs');
+if (gallery) gallery.innerHTML = WORK.map((w, i) => w.sketchfab
   ? `<figure class="work-3d px" style="--tile-bg:${esc(w.bg)}">
        <div class="work-frame"><iframe src="${sfEmbed(w.sketchfab)}" title="${esc(w.name)}, 3D model on Sketchfab" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>
        <figcaption><span class="nametag">${esc(w.name)}</span>${badge(w.cat)}<button class="btn btn-sm px" type="button" data-i="${i}">Render</button></figcaption>
@@ -123,10 +125,10 @@ $('#gallery').innerHTML = WORK.map((w, i) => w.sketchfab
      <img src="${esc(w.img)}" alt="${esc(w.alt || '')}" loading="lazy">
      <span class="tile-cap"><span class="nametag">${esc(w.name)}</span>${badge(w.cat)}</span>
    </button>`).join('');
-$('#gallery').addEventListener('click', e => { const t = e.target.closest('[data-i]'); if (t) openLightbox(WORK, +t.dataset.i); });
+gallery?.addEventListener('click', e => { const t = e.target.closest('[data-i]'); if (t) openLightbox(WORK, +t.dataset.i); });
 
 /* ---------- store: a horizontal shelf of packs, each with its Sketchfab viewer ---------- */
-$('#packs').innerHTML = PACKS.map(p => {
+if (packs) packs.innerHTML = PACKS.map(p => {
   const shown = p.includes.slice(0, 5), more = p.includes.length - shown.length;
   const actions = p.buy
     ? `<a class="btn btn-sm btn-primary px" href="${esc(p.buy)}" target="_blank" rel="noopener">Buy now ${ARROW}</a>
@@ -152,28 +154,33 @@ $('#packs').innerHTML = PACKS.map(p => {
     </div>
   </article>`;
 }).join('');
-$('#packs').addEventListener('click', e => {
+packs?.addEventListener('click', e => {
   const v = e.target.closest('[data-view]');
   if (v) openLightbox(PACK_SHOTS, PACK_SHOTS.findIndex(p => p.id === v.dataset.view));
 });
 // Arrow buttons page the shelf by one card; they disable at either end.
-const shelf = $('#packs'), shelfPrev = $('[data-shelf="-1"]'), shelfNext = $('[data-shelf="1"]');
-const shelfStep = () => (shelf.firstElementChild?.offsetWidth || shelf.clientWidth) + 18;
+const shelfPrev = $('[data-shelf="-1"]'), shelfNext = $('[data-shelf="1"]');
 const shelfEnds = () => {
-  shelfPrev.disabled = shelf.scrollLeft <= 2;
-  shelfNext.disabled = shelf.scrollLeft + shelf.clientWidth >= shelf.scrollWidth - 2;
+  shelfPrev.disabled = packs.scrollLeft <= 2;
+  shelfNext.disabled = packs.scrollLeft + packs.clientWidth >= packs.scrollWidth - 2;
 };
-$$('[data-shelf]').forEach(b => b.addEventListener('click', () =>
-  shelf.scrollBy({left: shelfStep() * +b.dataset.shelf, behavior: reduce ? 'auto' : 'smooth'})));
-shelf.addEventListener('scroll', shelfEnds, {passive:true});
-addEventListener('resize', shelfEnds);
-shelfEnds();
+if (packs && shelfPrev) {
+  const shelfStep = () => (packs.firstElementChild?.offsetWidth || packs.clientWidth) + 18;
+  $$('[data-shelf]').forEach(b => b.addEventListener('click', () =>
+    packs.scrollBy({left: shelfStep() * +b.dataset.shelf, behavior: reduce ? 'auto' : 'smooth'})));
+  packs.addEventListener('scroll', shelfEnds, {passive:true});
+  addEventListener('resize', shelfEnds);
+  shelfEnds();
+}
 document.addEventListener('click', e => {
   const d = e.target.closest('[data-dm]'); if (d) openDM(packById(d.dataset.dm));
   if (e.target.closest('[data-dm-custom]')) openDM(null);
 });
+// On the store page this scrolls to the pack; from the home page it opens the store at that pack.
 function goToPack(id){
-  document.getElementById('pack-' + id)?.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start', inline:'start'});
+  const card = document.getElementById('pack-' + id);
+  if (!card) { location.href = 'store.html#pack-' + encodeURIComponent(id); return; }
+  card.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start', inline:'start'});
 }
 
 /* ---------- modal ---------- */
@@ -265,5 +272,5 @@ function openDM(p){
 
 /* ---------- deep links like #pack-wushu ---------- */
 if (/^#pack-[\w-]+$/.test(location.hash)) {
-  requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'start'}));
+  requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'start', inline:'start'}));
 }

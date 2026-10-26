@@ -14,6 +14,7 @@ import chestClose3 from '../../assets/minecraft/sounds/block/chest/close3.ogg';
 import fireball from '../../assets/minecraft/sounds/mob/ghast/fireball4.ogg';
 import orb from '../../assets/minecraft/sounds/random/orb.ogg';
 import click from '../../assets/minecraft/sounds/random/click_stereo.ogg';
+import pop from '../../assets/minecraft/sounds/random/pop.ogg';
 
 const rand = Math.random;
 
@@ -26,8 +27,9 @@ const EVENTS = {
   chestClose: { files: [chestClose1, chestClose2, chestClose3], volume: () => 0.5, pitch: () => 0.9 + rand() * 0.1, mix: 1, pan: 0.45 }, // block.chest.close
   wave: { files: [orb], volume: () => 0.5, pitch: () => 0.8 + rand() * 0.4, mix: 0.9, pan: 0 }, // entity.experience_orb.pickup
   click: { files: [click], volume: () => 0.25, pitch: () => 1, mix: 1, pan: 0 }, // ui.button.click
+  chat: { files: [pop], volume: () => 0.3, pitch: () => 1.5 + rand() * 0.4, mix: 0.9, pan: -0.45 }, // entity.item.pickup, from the chat corner
 };
-const CUES = { wave: ['wave'], fire: ['stoke', 'crackle', 'crackle', 'crackle'], chestOpen: ['chestOpen'], chestClose: ['chestClose'] };
+const CUES = { wave: ['wave'], fire: ['stoke', 'crackle', 'crackle', 'crackle'], chestOpen: ['chestOpen'], chestClose: ['chestClose'], chat: ['chat'] };
 
 const toArrayBuffer = (dataUrl) => {
   const binary = atob(dataUrl.slice(dataUrl.indexOf(',') + 1)), bytes = new Uint8Array(binary.length);
