@@ -1,0 +1,20 @@
+{
+  "name": "vaskel-lantern-camp",
+  "private": true,
+  "description": "Vaskel's portfolio camp scene, built with React Three Fiber and bundled to one offline script.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "watch": "node tools/build.mjs --watch"
+  },
+  "dependencies": {
+    "@react-three/fiber": "8.17.10",
+    "@react-three/postprocessing": "2.16.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "three": "0.169.0",
+    "postprocessing": "6.39.5"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
+  }
+}

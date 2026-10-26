@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vaskel — The Lantern Camp</title><meta name="description" content="Step into Vaskel's lantern-lit workshop. Custom Minecraft weapons, props, items and pets, made in Blockbench.">
+<link rel="icon" href="camp/icon.svg" type="image/svg+xml"><meta name="theme-color" content="#0c1420"><link rel="stylesheet" href="vendor/fonts/fonts.css"><link rel="stylesheet" href="portfolio.css"><link rel="stylesheet" href="camp/camp.css"></head>
+<body><a class="skip" href="#work">Skip the camp and explore my work</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top" aria-label="Vaskel, back to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7 12 12 3 7Z" fill="#7cc443"/><path d="M3 7 12 12V22L3 17Z" fill="#8a5a36"/><path d="M21 7 12 12V22L21 17Z" fill="#6b4428"/><path d="M3 7 12 12 21 7V9.5L12 14.5 3 9.5Z" fill="#5aa83a"/></svg>VASKEL
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a class="nl hide-md" href="#work">Work</a>
+      <a class="nl" href="#store">Store</a>
+      <a class="nl hide-md" href="#buying">How to buy</a>
+      <a class="nl hide-sm" href="#contact">Contact</a>
+      <button class="btn btn-sm btn-primary px" type="button" data-dm-custom>DM me</button>
+    </nav>
+  </div>
+</header>
+<main id="top"><section class="camp" id="camp" aria-labelledby="campTitle">
+<div class="camp-world" id="campWorld"><canvas id="campCanvas" tabindex="0" role="application" aria-label="Interactive lantern camp with Vaskel's Minecraft skin. Drag to look around; click Vaskel, the fire or the chest. Keyboard controls are in Camp guide." aria-describedby="campGuideText"></canvas><img id="campStill" src="camp/fallback.png" alt="Vaskel's TV-head character sitting on a log beside a campfire in a moonlit woodland camp" hidden><span id="campLoading" class="camp-loading">Lighting the lanterns<span>…</span></span>
+<div class="camp-hotspots" id="campHotspots" aria-label="Explore the camp">
+<button class="hotspot" data-camp-action="wave" aria-label="Say hello to Vaskel"><span>+</span><b>Say hello</b></button>
+<button class="hotspot" data-camp-action="fire" aria-label="Stoke the campfire"><span>+</span><b>Stoke the fire</b></button>
+<button class="hotspot" data-camp-action="chest" aria-label="Open the model chest"><span>+</span><b>Made by Vaskel</b></button></div>
+<span class="maker-tag" id="makerTag" aria-hidden="true">Vaskel</span><span class="scene-corner" aria-hidden="true"><i></i> THE LANTERN CAMP <span>· AFTER HOURS</span></span></div>
+<div class="camp-intro"><p class="camp-eyebrow"><span></span> INDEPENDENT MINECRAFT MODELER</p><h1 id="campTitle">VASKEL<span>Small pixels.<br>Big possibilities.</span></h1><p class="camp-bio">Weapons, props & little companions.<br>Built in Blockbench. Ready for your world.</p></div>
+<nav class="camp-menu" aria-label="Explore Vaskel's work"><a class="menu-link selected" href="#work"><span class="menu-index">01</span><span>Explore my work<small>A look inside the workshop</small></span><span class="menu-arrow">↗</span></a><a class="menu-link" href="#store"><span class="menu-index">02</span><span>Browse the packs<small>Something for your next adventure</small></span><span class="menu-arrow">↗</span></a><button class="menu-link" type="button" data-dm-custom><span class="menu-index">03</span><span>Let's make something<small>Your idea, brought to life</small></span><span class="menu-arrow">↗</span></button></nav>
+<div class="camp-bottom"><p class="camp-hint"><span aria-hidden="true">↔</span> Drag to look around <i>·</i> Click to explore</p><div class="camp-tools"><button id="campSound" type="button" aria-pressed="false">Sound <span>off</span></button><button id="campMotion" type="button" aria-pressed="false">Pause</button><button id="campReset" type="button">Reset view</button><details id="campGuide"><summary aria-label="Camp guide">?</summary><div class="guide-panel"><h2>A little camp to explore</h2><p id="campGuideText">Click Vaskel to wave. Stoke the fire. Open the model chest. Drag empty space to look around; drag Vaskel to turn him.</p><p><kbd>W</kbd> Wave <kbd>F</kbd> Fire <kbd>O</kbd> Chest<br><kbd>←</kbd><kbd>→</kbd> Look <kbd>R</kbd> Reset</p></div></details></div></div>
+<article class="camp-feature" id="campFeature" hidden><button class="feature-close" type="button" aria-label="Close featured model">×</button><img src="renders/wushu-thumb.webp" width="120" height="68" alt="Wushu weapons by Vaskel"><div><p class="camp-eyebrow">FROM THE MODEL CHEST</p><h2>Wushu Weapons Pack</h2><button type="button" data-camp-pack="wushu">Explore this pack ↗</button></div></article><p id="campStatus" class="camp-status" role="status" aria-live="polite"></p>
+</section>  <section class="sec" id="work">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="label">Portfolio</p>
+          <h2>Recent work</h2>
+          <p class="sec-sub">Renders of my packs and past projects. Tap one to see it full size, or <a class="inline-link" data-sf href="#" target="_blank" rel="noopener">spin them in 3D on Sketchfab</a>.</p>
+        </div>
+      </header>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" id="store">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="label">Store</p>
+          <h2>Premade packs</h2>
+          <p class="sec-sub">Ready-made models for Minecraft Java. Message me on Discord to buy, then pay with PayPal, or GCash if you're in the Philippines.</p>
+        </div>
+        <p class="paywith"><span class="label">Payment</span><span class="pay px">PayPal</span><span class="pay px">GCash · PH</span></p>
+      </header>
+      <div class="cards" id="packs"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="buying">
+    <div class="wrap">
+      <header class="sec-head">
+        <div>
+          <p class="label">How to buy</p>
+          <h2>From DM to download</h2>
+        </div>
+      </header>
+      <ol class="steps">
+        <li class="step px"><span class="step-n">1</span><h3>Pick a pack</h3><p>Check what's in it and make sure it fits your project. If you need something changed, ask me first.</p></li>
+        <li class="step px"><span class="step-n">2</span><h3>DM me on Discord</h3><p>Tap "DM to buy", copy the message and send it to <b class="mono" data-dc-user></b>.</p></li>
+        <li class="step px"><span class="step-n">3</span><h3>Pay</h3><p>I'll reply with payment details. PayPal works anywhere, and GCash works in the Philippines.</p></li>
+        <li class="step px"><span class="step-n">4</span><h3>Get your files</h3><p>I send the files in your Discord DMs once the payment comes through.</p></li>
+      </ol>
+      <div class="terms">
+        <div class="term px"><p class="label ok">You can</p><ul class="okl"><li>Use the models on your server, map or resource pack</li><li>Retexture, recolor and edit them</li></ul></div>
+        <div class="term px"><p class="label no">Please don't</p><ul class="nol"><li>Resell or share the files, edited or not</li><li>Claim the models as your own work</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" id="contact">
+    <div class="wrap">
+      <div class="band px">
+        <div class="band-copy">
+          <p class="label" style="color:var(--grass)">Custom work</p>
+          <h2 class="h2">Want something made from scratch?</h2>
+          <p>I take commissions for weapons, items, props and pets through Fiverr. Not sure yet? Message me on Discord and we can talk it through.</p>
+          <div class="cta">
+            <a class="btn btn-primary px" data-fiverr href="#" target="_blank" rel="noopener">Order on Fiverr <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 3 13" stroke="currentColor" stroke-width="2.4" fill="none"/></svg></a>
+            <button class="btn px" type="button" data-dm-custom>Ask on Discord</button>
+          </div>
+        </div>
+        <ul class="contact-list">
+          <li><button class="crow px" type="button" data-copy-discord><span><span class="label">Discord · DMs open</span><span class="crow-v" data-dc-user></span></span><span class="crow-act">Copy</span></button></li>
+          <li><a class="crow px" data-ig href="#" target="_blank" rel="noopener"><span><span class="label">Instagram</span><span class="crow-v" data-ig-handle></span></span><span class="crow-act">Follow ↗</span></a></li>
+          <li><a class="crow px" data-sf href="#" target="_blank" rel="noopener"><span><span class="label">Sketchfab</span><span class="crow-v">Vaskel</span></span><span class="crow-act">3D models ↗</span></a></li>
+        </ul>
+      </div>
+      <dl class="faq">
+        <div><dt>Java or Bedrock?</dt><dd>Java Edition. Every pack is made for Java, not Bedrock.</dd></div>
+        <div><dt>Can I edit the models?</dt><dd>Yes. Recolor, retexture or rework them for your project. Just don't resell or share the files.</dd></div>
+        <div><dt>What do I need to use them?</dt><dd>A Java resource pack, or a plugin like ItemsAdder or Oraxen, to load the models in-game. To change them yourself, open them in Blockbench, which is free.</dd></div>
+      </dl>
+    </div>
+  </section>
+</main><footer class="foot">
+  <div class="wrap foot-in">
+    <span>© 2026 Vaskel · Custom Minecraft models made in Blockbench</span>
+    <nav class="foot-links" aria-label="Elsewhere">
+      <a data-ig href="#" target="_blank" rel="noopener">Instagram</a>
+      <a data-sf href="#" target="_blank" rel="noopener">Sketchfab</a>
+      <a data-fiverr href="#" target="_blank" rel="noopener">Fiverr</a>
+      <a href="#contact">Discord</a>
+    </nav>
+    <p class="legal">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-scrim" data-close></div>
+  <div class="panel px" id="panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></div>
+</div>
+<div class="toast px" id="toast" role="status" aria-live="polite"></div>
+
+<script src="portfolio.js"></script>
+<script src="camp/scene.bundle.js"></script>
+</body></html>
