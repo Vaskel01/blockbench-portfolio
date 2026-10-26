@@ -256,7 +256,8 @@ export function buildWorld(images, { mobile }) {
         for (let dy = -Math.ceil(ry); dy <= Math.ceil(ry); dy++) {
           const d = (dx / rx) ** 2 + (dy / ry) ** 2 + (dz / rz) ** 2;
           if (d > 1 || d < 0.28 || (d > 0.62 && r() < 0.32)) continue;
-          block(Math.round(cx) + dx, Math.round(cy) + dy + 0.5, Math.round(cz) + dz, pick(dy, r), g);
+          const material = pick(dy, r);
+          if (material) block(Math.round(cx) + dx, Math.round(cy) + dy + 0.5, Math.round(cz) + dz, material, g);
         }
       }
     }
@@ -337,12 +338,11 @@ export function buildWorld(images, { mobile }) {
     }
     leafBlob(g, 0.5, height + 0.5, 0.5, 3.6 * size, 1.6 * size, 3.6 * size, r, (dy, rr) => (dy < 0 || rr() < 0.2 ? mats.leafDark : mats.darkLeaf));
   }
-  // Azalea bush: a stubby trunk under a round mix of plain and flowering azalea leaves.
+  // Azalea bush: a low mound of plain and flowering azalea leaves sitting right on the ground.
   function azalea(x, z, size = 1) {
     const g = treeGroup(x, z), r = rng(x * 19 + z * 83 + 1);
     take(x, z);
-    block(0, 0.5, 0, mats.log, g);
-    leafBlob(g, 0, 1.4, 0, 1.6 * size, 1.1 * size, 1.6 * size, r, (dy, rr) => (rr() < 0.4 ? mats.bloom : mats.azalea));
+    leafBlob(g, 0, 0.6, 0, 1.6 * size, 1.1 * size, 1.6 * size, r, (dy, rr) => (dy < -1 ? null : rr() < 0.3 ? mats.bloom : mats.azalea));
   }
 
   // Hero trees frame the clearing on both sides; azaleas fill the understorey at its edge.

@@ -56,10 +56,10 @@ const PACKS = [
 const WORK_LIST = [
   { pack:"adventurer" },
   { pack:"wushu" },
-  { img:"renders/pets.webp", name:"Companion pets", cat:"Pets", bg:"#64a8e5", alt:"Six cute creature models including a penguin, a pink bunny and a flame spirit" },
+  { img:"renders/pets.webp", name:"Companion pets", cat:"Pets", bg:"#64a8e5", sketchfab:"e3bf7e8e37a14b5fbaff6853f5dc1d0a", alt:"Six cute creature models including a penguin, a pink bunny and a flame spirit" },
   { pack:"staffs-2" },
   { pack:"pumpkins" },
-  { img:"renders/scifi.webp", name:"Sci-fi cargo set", cat:"Props", bg:"#72b9b1", alt:"Sci-fi storage lockers with green screens, cargo cases and tall supply containers, with a player model for scale" },
+  { img:"renders/scifi.webp", name:"Sci-fi cargo set", cat:"Props", bg:"#72b9b1", sketchfab:"c192278b735248cf95cc99d7a79dc7e6", alt:"Sci-fi storage lockers with green screens, cargo cases and tall supply containers, with a player model for scale" },
   { pack:"phase-tools" },
   { pack:"staffs-1" }
 ];
@@ -111,17 +111,21 @@ document.addEventListener('click', e => {
   if (b) copy(SITE.discord, 'Discord username', b.querySelector('[data-dc-user]'));
 });
 
-/* ---------- portfolio ---------- */
-$('#gallery').innerHTML = WORK.map((w, i) =>
-  `<button class="tile px" type="button" data-i="${i}" style="--tile-bg:${esc(w.bg)}" aria-label="${esc(w.name)}, view full size">
+/* ---------- portfolio: each piece in its Sketchfab viewer (or its render when it has none) ---------- */
+// Viewers show Sketchfab's own poster and play button and only start their 3D view when clicked.
+const sfEmbed = id => `https://sketchfab.com/models/${encodeURIComponent(id)}/embed?ui_theme=dark&dnt=1&ui_hint=0&ui_watermark_link=0`;
+$('#gallery').innerHTML = WORK.map((w, i) => w.sketchfab
+  ? `<figure class="work-3d px" style="--tile-bg:${esc(w.bg)}">
+       <div class="work-frame"><iframe src="${sfEmbed(w.sketchfab)}" title="${esc(w.name)}, 3D model on Sketchfab" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>
+       <figcaption><span class="nametag">${esc(w.name)}</span>${badge(w.cat)}<button class="btn btn-sm px" type="button" data-i="${i}">Render</button></figcaption>
+     </figure>`
+  : `<button class="tile px" type="button" data-i="${i}" style="--tile-bg:${esc(w.bg)}" aria-label="${esc(w.name)}, view full size">
      <img src="${esc(w.img)}" alt="${esc(w.alt || '')}" loading="lazy">
      <span class="tile-cap"><span class="nametag">${esc(w.name)}</span>${badge(w.cat)}</span>
    </button>`).join('');
-$('#gallery').addEventListener('click', e => { const t = e.target.closest('.tile'); if (t) openLightbox(WORK, +t.dataset.i); });
+$('#gallery').addEventListener('click', e => { const t = e.target.closest('[data-i]'); if (t) openLightbox(WORK, +t.dataset.i); });
 
 /* ---------- store: a horizontal shelf of packs, each with its Sketchfab viewer ---------- */
-// The viewer shows Sketchfab's own poster and play button and only starts its 3D view when clicked.
-const sfEmbed = id => `https://sketchfab.com/models/${encodeURIComponent(id)}/embed?ui_theme=dark&dnt=1&ui_hint=0&ui_watermark_link=0`;
 $('#packs').innerHTML = PACKS.map(p => {
   const shown = p.includes.slice(0, 5), more = p.includes.length - shown.length;
   const actions = p.buy

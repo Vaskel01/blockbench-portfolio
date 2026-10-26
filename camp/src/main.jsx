@@ -65,14 +65,19 @@ async function boot() {
   const abort = new AbortController();
   const on = (el, type, fn, options = {}) => el.addEventListener(type, fn, { ...options, signal: abort.signal });
   const audio = createCampAudio(soundButton);
-  let three = null, inView = true, pageVisible = !document.hidden, statusTimer = 0;
+  let three = null, inView = true, pageVisible = !document.hidden;
   const wake = () => three?.invalidate();
 
-  const describe = (message) => {
-    status.textContent = message;
-    status.classList.add('on');
-    clearTimeout(statusTimer);
-    statusTimer = setTimeout(() => status.classList.remove('on'), 3300);
+  // Messages appear as Minecraft chat: "<Vaskel> ..." lines that stack up, then fade like the in-game chat.
+  // Messages with no speaker are shown as grey system lines.
+  const describe = (message, speaker = 'Vaskel') => {
+    const line = document.createElement('p');
+    line.className = 'mc-line' + (speaker ? '' : ' mc-system');
+    line.textContent = speaker ? `<${speaker}> ${message}` : message;
+    status.append(line);
+    while (status.children.length > 4) status.firstElementChild.remove();
+    setTimeout(() => line.classList.add('fade'), 6000);
+    setTimeout(() => line.remove(), 6700);
   };
 
   function action(kind) {
@@ -112,7 +117,7 @@ async function boot() {
   function reset() {
     camp.orbit.targetYaw = camp.orbit.targetPitch = 0;
     camp.turnTarget = 0;
-    describe('Back to the best seat in camp.');
+    describe('View reset.', null);
     wake();
   }
 
@@ -125,8 +130,8 @@ async function boot() {
     };
     const anchors = {
       wave: () => camp.refs.head.getWorldPosition(anchor).add(lift.set(0, 0.67, 0)),
-      fire: () => anchor.copy(camp.refs.fire.position).add(lift.set(0.65, 0.7, 0)),
-      chest: () => anchor.copy(camp.refs.chest.position).add(lift.set(0.5, 0.55, 0)),
+      fire: () => anchor.copy(camp.refs.fire.position).add(lift.set(0, 1.75, 0)),
+      chest: () => anchor.copy(camp.refs.chest.position).add(lift.set(0, 1.15, 0)),
     };
     for (const button of hotspotButtons) {
       const target = anchors[button.dataset.campAction];
