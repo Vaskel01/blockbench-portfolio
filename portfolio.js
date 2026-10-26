@@ -18,33 +18,34 @@ const CAT = { "Weapons":"var(--red)", "Tools":"var(--blue)", "Props":"#d9861c", 
 
 // price: a number like 15, or null to show "Ask for price".
 // buy:   a checkout link (Gumroad, Payhip, Ko-fi...) adds a "Buy now" button. "" = buy through Discord.
+// sketchfab: the model id from its Sketchfab URL (sketchfab.com/3d-models/name-<id>) shows a 3D viewer; "" = render image.
 const PACKS = [
-  { id:"wushu", name:"Wushu Weapons Pack", cat:"Weapons", price:15, buy:"",
+  { id:"wushu", name:"Wushu Weapons Pack", cat:"Weapons", price:15, buy:"", sketchfab:"0e00750ad446432ea0aafea903889c86",
     img:"renders/wushu.webp", thumb:"renders/wushu-thumb.webp", bg:"#657862",
     alt:"Twelve Chinese martial arts weapons: straight swords and curved sabers on top, tridents, spears and a bamboo staff below",
     blurb:"Twelve weapons from Chinese martial arts: straight jian swords, curved dao sabers, tridents, a red-tassel spear and a bamboo staff.",
     includes:["Jian swords","Dao sabers","Tridents","Red-tassel spear","Bamboo staff","12 weapons"] },
-  { id:"pumpkins", name:"Vaskel's Pumpkins", cat:"Props", price:9.99, buy:"",
+  { id:"pumpkins", name:"Vaskel's Pumpkins", cat:"Props", price:9.99, buy:"", sketchfab:"7fc15ce3c3ae4961a5727ad6ce855365",
     img:"renders/pumpkins.webp", thumb:"renders/pumpkins-thumb.webp", bg:"#f88620",
     alt:"Carved pumpkins in green, white and orange, in small, medium and large sizes",
     blurb:"Carved jack o'lanterns for autumn and Halloween builds, in three sizes and three colors.",
     includes:["Small, medium & large","Orange, green & white","Carved faces"] },
-  { id:"staffs-2", name:"Vaskel's Magic Staffs Pack II", cat:"Weapons", price:15, buy:"",
+  { id:"staffs-2", name:"Vaskel's Magic Staffs Pack II", cat:"Weapons", price:15, buy:"", sketchfab:"443285e481d1423c8ea5cb5b860db4e7",
     img:"renders/staffs.webp", thumb:"renders/staffs-thumb.webp", bg:"#747c9d",
     alt:"Rows of magic staffs in many colors: lantern, crystal, ring and winged gem designs",
     blurb:"A big set of magic staffs for mage classes and loot tables. Every design comes in three colorways.",
     includes:["Lantern staffs","Crystal staffs","Ring staffs","Winged gem staffs","3 colorways each"] },
-  { id:"adventurer", name:"Adventurer's Essentials Kit", cat:"Items & props", price:15, buy:"",
+  { id:"adventurer", name:"Adventurer's Essentials Kit", cat:"Items & props", price:15, buy:"", sketchfab:"26f7403fef05419e8cbdc9d19df791d2",
     img:"renders/workshop.webp", thumb:"renders/workshop-thumb.webp", bg:"#fffa97",
     alt:"Wooden desk covered in scrolls and potion jars, with a battle axe, a greatsword and gem blocks around it",
     blurb:"Gear for an adventurer's table: scrolls and maps, potion jars, banners and gem blocks, plus a battle axe and a greatsword.",
     includes:["Wooden table","Scrolls & maps","Potion jars","Banners","Gem blocks","Battle axe","Greatsword"] },
-  { id:"phase-tools", name:"Phase Tools Bundle", cat:"Tools", price:15, buy:"",
+  { id:"phase-tools", name:"Phase Tools Bundle", cat:"Tools", price:15, buy:"", sketchfab:"bff733e2fbf54d3f8d4c12a15d0e282f",
     img:"renders/gear.webp", thumb:"renders/gear-thumb.webp", bg:"#c9fff7",
     alt:"Bow, shovel, axe, sword, hoe, pickaxe and shield with crystal heads, in purple, cyan and lime",
     blurb:"A matching set of crystal-tipped tools and weapons in three colorways. Good for a custom tier or a seasonal reward.",
     includes:["Sword","Pickaxe","Axe","Shovel","Hoe","Bow","Shield","Purple, cyan & lime"] },
-  { id:"staffs-1", name:"Vaskel's Magic Staffs Pack", cat:"Weapons", price:15, buy:"",
+  { id:"staffs-1", name:"Vaskel's Magic Staffs Pack", cat:"Weapons", price:15, buy:"", sketchfab:"bc742a5a4ae14ad5b6933d49fb1f7b7e",
     img:"renders/staffs1.webp", thumb:"renders/staffs1-thumb.webp", bg:"#fdb8ff",
     alt:"Eight magic staffs with glowing crystal heads in different colors",
     blurb:"The original staffs pack: eight magic staffs, each with its own crystal head and color scheme.",
@@ -118,21 +119,26 @@ $('#gallery').innerHTML = WORK.map((w, i) =>
    </button>`).join('');
 $('#gallery').addEventListener('click', e => { const t = e.target.closest('.tile'); if (t) openLightbox(WORK, +t.dataset.i); });
 
-/* ---------- store ---------- */
+/* ---------- store: a horizontal shelf of packs, each with its Sketchfab viewer ---------- */
+// The viewer shows Sketchfab's own poster and play button and only starts its 3D view when clicked.
+const sfEmbed = id => `https://sketchfab.com/models/${encodeURIComponent(id)}/embed?ui_theme=dark&dnt=1&ui_hint=0&ui_watermark_link=0`;
 $('#packs').innerHTML = PACKS.map(p => {
   const shown = p.includes.slice(0, 5), more = p.includes.length - shown.length;
   const actions = p.buy
     ? `<a class="btn btn-sm btn-primary px" href="${esc(p.buy)}" target="_blank" rel="noopener">Buy now ${ARROW}</a>
        <button class="btn btn-sm px" type="button" data-dm="${esc(p.id)}">DM me</button>`
     : `<button class="btn btn-sm btn-primary px" type="button" data-dm="${esc(p.id)}">DM to buy</button>
-       <button class="btn btn-sm px" type="button" data-view="${esc(p.id)}">View</button>`;
+       <button class="btn btn-sm px" type="button" data-view="${esc(p.id)}">Render</button>`;
   const price = hasPrice(p)
     ? `<span class="price">${money(p.price)}<small>${esc(SITE.currency)}</small></span>`
     : `<span class="price ask">Ask for price</span>`;
-  return `<article class="card px" id="pack-${esc(p.id)}">
-    <button class="card-img" type="button" data-view="${esc(p.id)}" style="--tile-bg:${esc(p.bg)}" aria-label="View the ${esc(p.name)} render full size">
+  const media = p.sketchfab
+    ? `<div class="card-3d" style="--tile-bg:${esc(p.bg)}"><iframe src="${sfEmbed(p.sketchfab)}" title="${esc(p.name)}, 3D model on Sketchfab" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>`
+    : `<button class="card-img" type="button" data-view="${esc(p.id)}" style="--tile-bg:${esc(p.bg)}" aria-label="View the ${esc(p.name)} render full size">
       <img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy">
-    </button>
+    </button>`;
+  return `<article class="card px" id="pack-${esc(p.id)}">
+    ${media}
     <div class="card-body">
       <div class="card-meta">${badge(p.cat)}<span class="label">${esc(SITE.edition)}</span></div>
       <h3>${esc(p.name)}</h3>
@@ -146,12 +152,24 @@ $('#packs').addEventListener('click', e => {
   const v = e.target.closest('[data-view]');
   if (v) openLightbox(PACK_SHOTS, PACK_SHOTS.findIndex(p => p.id === v.dataset.view));
 });
+// Arrow buttons page the shelf by one card; they disable at either end.
+const shelf = $('#packs'), shelfPrev = $('[data-shelf="-1"]'), shelfNext = $('[data-shelf="1"]');
+const shelfStep = () => (shelf.firstElementChild?.offsetWidth || shelf.clientWidth) + 18;
+const shelfEnds = () => {
+  shelfPrev.disabled = shelf.scrollLeft <= 2;
+  shelfNext.disabled = shelf.scrollLeft + shelf.clientWidth >= shelf.scrollWidth - 2;
+};
+$$('[data-shelf]').forEach(b => b.addEventListener('click', () =>
+  shelf.scrollBy({left: shelfStep() * +b.dataset.shelf, behavior: reduce ? 'auto' : 'smooth'})));
+shelf.addEventListener('scroll', shelfEnds, {passive:true});
+addEventListener('resize', shelfEnds);
+shelfEnds();
 document.addEventListener('click', e => {
   const d = e.target.closest('[data-dm]'); if (d) openDM(packById(d.dataset.dm));
   if (e.target.closest('[data-dm-custom]')) openDM(null);
 });
 function goToPack(id){
-  document.getElementById('pack-' + id)?.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+  document.getElementById('pack-' + id)?.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start', inline:'start'});
 }
 
 /* ---------- modal ---------- */

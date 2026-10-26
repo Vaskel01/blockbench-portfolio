@@ -86,13 +86,18 @@ button{font:inherit;color:inherit}
 @media (prefers-reduced-motion:reduce){.tile img{transition:none}.tile:hover img{transform:none}}
 @media (max-width:700px){.gallery{grid-template-columns:minmax(0,1fr);gap:12px}}
 
-/* store: card grid */
+/* store: horizontal shelf of cards, snapping one card at a time */
+.store-side{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
 .paywith{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .pay{--n:3px;padding:5px 12px 6px;background:var(--panel-2);color:var(--fg);font-weight:800;font-size:14.5px}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-@media (max-width:1020px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.cards{grid-template-columns:minmax(0,1fr)}}
-.card{--n:8px;display:flex;flex-direction:column;background:var(--panel);scroll-margin-top:86px;min-width:0}
+.shelf-nav{display:flex;gap:8px}
+.shelf-nav .btn{min-width:44px;font-size:18px}
+.shelf-nav .btn:disabled{opacity:.35;cursor:default}
+.cards{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding-bottom:16px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.cards:focus-visible{outline:3px solid var(--grass);outline-offset:4px}
+.card{--n:8px;display:flex;flex-direction:column;background:var(--panel);scroll-margin-top:86px;min-width:0;flex:0 0 min(540px,86vw);scroll-snap-align:start}
+.card-3d{position:relative;aspect-ratio:16/10;background:var(--tile-bg,#222)}
+.card-3d iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 .card-img{position:relative;display:block;width:100%;aspect-ratio:16/9;max-width:100%;padding:0;border:0;cursor:zoom-in;background:var(--tile-bg,#222);overflow:hidden}
 .card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .card-img:hover img{transform:scale(1.05)}
