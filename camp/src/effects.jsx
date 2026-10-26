@@ -55,7 +55,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
   outputColor = vec4(max(mix(vec3(l2), c, saturation), 0.0), inputColor.a);
 }`;
 
-class SplitToneEffect extends Effect {
+export class SplitToneEffect extends Effect {
   constructor({ shadowTint = [0.86, 0.96, 1.32], highlightTint = [1.22, 1.0, 0.8], saturation = 1.12 } = {}) {
     super('SplitToneEffect', splitToneShader, {
       blendFunction: BlendFunction.NORMAL,

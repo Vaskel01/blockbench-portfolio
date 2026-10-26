@@ -196,7 +196,9 @@ button{font:inherit;color:inherit}
 .shop-copy{display:flex;flex-direction:column;gap:14px}
 .shop-copy .label{color:var(--grass)}
 .shop-copy p{font-size:17px;max-width:46ch}
-.shop-shot{--n:8px;display:block;overflow:hidden;background:var(--panel)}
+.shop-shot{display:block;overflow:hidden;
+  /* No frame: the render is lit against the section colour, and its edges dissolve into the page. */
+  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 100%)}
 .shop-shot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .shop-shot:hover img{transform:scale(1.03)}
 .shop-shot:focus-visible{outline:3px solid var(--grass);outline-offset:4px}
