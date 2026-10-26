@@ -1,9 +1,23 @@
 // Bundles camp/src into one classic script (camp/scene.bundle.js) so index.html still works from file://,
-// and writes the licenses of every bundled package next to it.
+// writes the licenses of every bundled package next to it, and assembles the deployable site in public/
+// (the folder Vercel publishes): only the files the page loads, never the source, tools or node_modules.
 // Usage: npm run build   (or npm run watch while editing)
 import * as esbuild from 'esbuild';
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+
+const SITE = [
+  'index.html', 'portfolio.css', 'portfolio.js', 'renders', 'vendor', 'assets/minecraft/SOURCES.md',
+  'camp/scene.bundle.js', 'camp/scene.bundle.LICENSES.txt', 'camp/camp.css', 'camp/fallback.png', 'camp/icon.svg',
+];
+
+function writeSite() {
+  rmSync('public', { recursive: true, force: true });
+  for (const path of SITE) {
+    mkdirSync(join('public', path, '..'), { recursive: true });
+    cpSync(path, join('public', path), { recursive: true });
+  }
+}
 
 const options = {
   entryPoints: ['camp/src/main.jsx'],
@@ -38,7 +52,11 @@ function writeLicenses(metafile) {
 const plugins = [{
   name: 'licenses',
   setup(build) {
-    build.onEnd((result) => result.metafile && writeLicenses(result.metafile));
+    build.onEnd((result) => {
+      if (!result.metafile) return;
+      writeLicenses(result.metafile);
+      writeSite();
+    });
   },
 }];
 
