@@ -147,12 +147,13 @@ async function boot() {
       tag.style.left = p.x + 'px';
       tag.style.top = p.y - 11 + 'px';
     }
-    // On wide screens the chat sits on the open floor just left of Vaskel's log, growing upward from there,
-    // and never slides under the menu.
+    // On wide screens the chat sits on the open floor just left of Vaskel's log, growing upward from a baseline
+    // level with the bottom of the campfire's front-left corner log, and never slides under the menu.
     if (size.width > 900) {
-      const p = project(anchor.set(-2.2, 0, 3.1)), menuRight = menu.getBoundingClientRect().right - world.getBoundingClientRect().left;
-      status.style.left = Math.max(p.x, menuRight + 24) + 'px';
-      status.style.bottom = Math.max(24, size.height - p.y) + 'px';
+      const left = project(anchor.set(-2.2, 0, 3.1)).x, menuRight = menu.getBoundingClientRect().right - world.getBoundingClientRect().left;
+      const base = camp.refs.fire ? project(anchor.copy(camp.refs.fire.position).add(lift.set(-0.575, 0, 0.575))).y : size.height - 24;
+      status.style.left = Math.max(left, menuRight + 24) + 'px';
+      status.style.bottom = Math.max(24, size.height - base) + 'px';
     } else status.style.left = status.style.bottom = '';
   }
 
