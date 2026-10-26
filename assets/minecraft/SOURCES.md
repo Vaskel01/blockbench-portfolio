@@ -9,7 +9,7 @@ Minecraft Java Edition 1.21.1 textures, © Mojang Studios / Microsoft, extracted
 - Entity texture (entity/chest/, from assets/minecraft/textures/entity/chest/): normal.
 - Environment texture (environment/, from assets/minecraft/textures/environment/): clouds — the cloud layer is built from its pixels.
 - Also block/red_mushroom and block/brown_mushroom.
-- For the workshop render (renders/workshop-vaskel.webp): block/anvil, anvil_top (the anvil geometry follows assets/minecraft/models/block/anvil.json), bricks, polished_blackstone_bricks, item_frame, barrel_side, barrel_top, and item/iron_sword, mace, diamond_sword, golden_sword, iron_pickaxe, iron_axe, shears, amethyst_shard, writable_book, iron_ingot, eye_armor_trim_smithing_template, netherite_upgrade_smithing_template, filled_map (from assets/minecraft/textures/item/). It also reuses the planks and logs listed above.
+- For the workshop render (renders/workshop-vaskel.webp): painting/pond (from assets/minecraft/textures/painting/), on the easel canvas; the easel and palette reuse the spruce and oak planks listed above. The paint buckets, brush and Vaskel's pose are original.
 - Model data: the campfire geometry and UVs in camp/src/minecraft.js follow assets/minecraft/models/block/template_campfire.json; the animation timings follow the campfire_log_lit, campfire_fire, water_still and water_flow .mcmeta files. The chest uses the game's single-chest part layout (bottom, lid and lock boxes).
 
 ## Sounds

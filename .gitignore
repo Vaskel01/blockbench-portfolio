@@ -3,4 +3,3 @@ public/
 # Workshop render scratch output (npm run render:workshop)
 tools/workshop/bundle.js
 tools/workshop/*.html
-tools/workshop/shot.png

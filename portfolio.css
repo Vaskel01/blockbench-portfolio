@@ -196,10 +196,9 @@ button{font:inherit;color:inherit}
 .shop-copy{display:flex;flex-direction:column;gap:14px}
 .shop-copy .label{color:var(--grass)}
 .shop-copy p{font-size:17px;max-width:46ch}
-.shop-shot{display:block;overflow:hidden;
-  /* No frame: the render is lit against the section colour, and its edges dissolve into the page. */
-  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 55%,transparent 100%)}
-.shop-shot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+/* The render is a transparent cutout, so it sits straight on the section with no frame. */
+.shop-shot{display:block}
+.shop-shot img{display:block;width:100%;height:auto;max-width:640px;margin-inline:auto;filter:drop-shadow(0 18px 32px rgba(0,0,0,.35));transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .shop-shot:hover img{transform:scale(1.03)}
 .shop-shot:focus-visible{outline:3px solid var(--grass);outline-offset:4px}
 @media (max-width:860px){.shop-teaser{grid-template-columns:minmax(0,1fr);gap:24px}.shop-shot{order:-1}}
