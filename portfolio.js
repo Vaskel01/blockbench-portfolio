@@ -14,49 +14,53 @@ const SITE = {
 };
 
 // Badge color per category
-const CAT = { "Weapons":"var(--red)", "Tools":"var(--blue)", "Props":"#d9861c", "Pets":"var(--purple)", "Items & props":"#2a9d80", "Scenes":"#c0408a" };
+const CAT = { "Weapons":"var(--red)", "Tools":"var(--blue)", "Props":"#d9861c", "Pets":"var(--purple)", "Items & props":"#2a9d80" };
 
 // price: a number like 15, or null to show "Ask for price".
 // buy:   a checkout link (Gumroad, Payhip, Ko-fi...) adds a "Buy now" button. "" = buy through Discord.
 // sketchfab: the model id from its Sketchfab URL (sketchfab.com/3d-models/name-<id>) shows a 3D viewer; "" = render image.
+// tags:  short words buyers can filter the store by (magic, halloween, colorways...); search looks through them too.
 const PACKS = [
   { id:"wushu", name:"Wushu Weapons Pack", cat:"Weapons", price:15, buy:"", sketchfab:"0e00750ad446432ea0aafea903889c86",
     img:"renders/wushu.webp", thumb:"renders/wushu-thumb.webp", bg:"#657862",
     alt:"Twelve Chinese martial arts weapons: straight swords and curved sabers on top, tridents, spears and a bamboo staff below",
     blurb:"Twelve weapons from Chinese martial arts: straight jian swords, curved dao sabers, tridents, a red-tassel spear and a bamboo staff.",
+    tags:["swords","spears","martial arts","melee"],
     includes:["Jian swords","Dao sabers","Tridents","Red-tassel spear","Bamboo staff","12 weapons"] },
   { id:"pumpkins", name:"Vaskel's Pumpkins", cat:"Props", price:9.99, buy:"", sketchfab:"7fc15ce3c3ae4961a5727ad6ce855365",
     img:"renders/pumpkins.webp", thumb:"renders/pumpkins-thumb.webp", bg:"#f88620",
     alt:"Carved pumpkins in green, white and orange, in small, medium and large sizes",
     blurb:"Carved jack o'lanterns for autumn and Halloween builds, in three sizes and three colors.",
+    tags:["halloween","seasonal","decor"],
     includes:["Small, medium & large","Orange, green & white","Carved faces"] },
   { id:"staffs-2", name:"Vaskel's Magic Staffs Pack II", cat:"Weapons", price:15, buy:"", sketchfab:"443285e481d1423c8ea5cb5b860db4e7",
     img:"renders/staffs.webp", thumb:"renders/staffs-thumb.webp", bg:"#747c9d",
     alt:"Rows of magic staffs in many colors: lantern, crystal, ring and winged gem designs",
     blurb:"A big set of magic staffs for mage classes and loot tables. Every design comes in three colorways.",
+    tags:["magic","staffs","colorways","rpg"],
     includes:["Lantern staffs","Crystal staffs","Ring staffs","Winged gem staffs","3 colorways each"] },
   { id:"adventurer", name:"Adventurer's Essentials Kit", cat:"Items & props", price:15, buy:"", sketchfab:"26f7403fef05419e8cbdc9d19df791d2",
     img:"renders/workshop.webp", thumb:"renders/workshop-thumb.webp", bg:"#fffa97",
     alt:"Wooden desk covered in scrolls and potion jars, with a battle axe, a greatsword and gem blocks around it",
     blurb:"Gear for an adventurer's table: scrolls and maps, potion jars, banners and gem blocks, plus a battle axe and a greatsword.",
+    tags:["rpg","decor","furniture","melee"],
     includes:["Wooden table","Scrolls & maps","Potion jars","Banners","Gem blocks","Battle axe","Greatsword"] },
   { id:"phase-tools", name:"Phase Tools Bundle", cat:"Tools", price:15, buy:"", sketchfab:"bff733e2fbf54d3f8d4c12a15d0e282f",
     img:"renders/gear.webp", thumb:"renders/gear-thumb.webp", bg:"#c9fff7",
     alt:"Bow, shovel, axe, sword, hoe, pickaxe and shield with crystal heads, in purple, cyan and lime",
     blurb:"A matching set of crystal-tipped tools and weapons in three colorways. Good for a custom tier or a seasonal reward.",
+    tags:["tools","crystal","colorways","ranged"],
     includes:["Sword","Pickaxe","Axe","Shovel","Hoe","Bow","Shield","Purple, cyan & lime"] },
   { id:"staffs-1", name:"Vaskel's Magic Staffs Pack", cat:"Weapons", price:15, buy:"", sketchfab:"bc742a5a4ae14ad5b6933d49fb1f7b7e",
     img:"renders/staffs1.webp", thumb:"renders/staffs1-thumb.webp", bg:"#fdb8ff",
     alt:"Eight magic staffs with glowing crystal heads in different colors",
     blurb:"The original staffs pack: eight magic staffs, each with its own crystal head and color scheme.",
+    tags:["magic","staffs","crystal","rpg"],
     includes:["8 staffs","Glowing crystal heads"] }
 ];
 
 // Portfolio, in order. Use a pack id to reuse that pack's render, or give an image for work that isn't for sale.
 const WORK_LIST = [
-  { img:"renders/scene-wushu.webp", name:"Wushu courtyard duel", cat:"Scenes", bg:"#c9d3dc", alt:"A martial artist in red silk flies into a side kick against a fighter in blue who blocks with a staff, in a temple courtyard with red pillars, lanterns, a plum tree in blossom and a weapon rack" },
-  { img:"renders/scene-rooftops.webp", name:"Rooftop run", cat:"Scenes", bg:"#5e4680", alt:"A runner in a hooded jacket leaps across the gap between two rooftops at sunset, above a street of infected and burnt-out cars, with a UV lamp glowing on the roof behind" },
-  { img:"renders/scene-dark-hour.webp", name:"The Dark Hour", cat:"Scenes", bg:"#0e2a1a", alt:"A student in a dark school blazer with headphones and a sword stands among coffins and red puddles as a glowing spirit rises behind him, under a giant moon and a twisting tower" },
   { pack:"adventurer" },
   { pack:"wushu" },
   { img:"renders/pets.webp", name:"Companion pets", cat:"Pets", bg:"#64a8e5", sketchfab:"e3bf7e8e37a14b5fbaff6853f5dc1d0a", alt:"Six cute creature models including a penguin, a pink bunny and a flame spirit" },
@@ -130,8 +134,8 @@ if (gallery) gallery.innerHTML = WORK.map((w, i) => w.sketchfab
    </button>`).join('');
 gallery?.addEventListener('click', e => { const t = e.target.closest('[data-i]'); if (t) openLightbox(WORK, +t.dataset.i); });
 
-/* ---------- store: a horizontal shelf of packs, each with its Sketchfab viewer ---------- */
-if (packs) packs.innerHTML = PACKS.map(p => {
+/* ---------- store: a grid of packs with search, category and tag filters, and sorting ---------- */
+const packCard = p => {
   const shown = p.includes.slice(0, 5), more = p.includes.length - shown.length;
   const actions = p.buy
     ? `<a class="btn btn-sm btn-primary px" href="${esc(p.buy)}" target="_blank" rel="noopener">Buy now ${ARROW}</a>
@@ -146,6 +150,7 @@ if (packs) packs.innerHTML = PACKS.map(p => {
     : `<button class="card-img" type="button" data-view="${esc(p.id)}" style="--tile-bg:${esc(p.bg)}" aria-label="View the ${esc(p.name)} render full size">
       <img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy">
     </button>`;
+  const tags = p.tags?.length ? `<p class="card-tags">${p.tags.map(t => `<button type="button" data-tag="${esc(t)}" aria-label="Show packs tagged ${esc(t)}">#${esc(t)}</button>`).join('')}</p>` : '';
   return `<article class="card px" id="pack-${esc(p.id)}">
     ${media}
     <div class="card-body">
@@ -153,36 +158,114 @@ if (packs) packs.innerHTML = PACKS.map(p => {
       <h3>${esc(p.name)}</h3>
       <p>${esc(p.blurb)}</p>
       ${shown.length ? `<ul class="inc" aria-label="In this pack">${shown.map(x => `<li class="px">${esc(x)}</li>`).join('')}${more > 0 ? `<li class="px">+${more} more</li>` : ''}</ul>` : ''}
+      ${tags}
       <div class="card-buy">${price}<div class="card-actions">${actions}</div></div>
     </div>
   </article>`;
-}).join('');
-packs?.addEventListener('click', e => {
-  const v = e.target.closest('[data-view]');
-  if (v) openLightbox(PACK_SHOTS, PACK_SHOTS.findIndex(p => p.id === v.dataset.view));
-});
-// Arrow buttons page the shelf by one card; they disable at either end.
-const shelfPrev = $('[data-shelf="-1"]'), shelfNext = $('[data-shelf="1"]');
-const shelfEnds = () => {
-  shelfPrev.disabled = packs.scrollLeft <= 2;
-  shelfNext.disabled = packs.scrollLeft + packs.clientWidth >= packs.scrollWidth - 2;
 };
-if (packs && shelfPrev) {
-  const shelfStep = () => (packs.firstElementChild?.offsetWidth || packs.clientWidth) + 18;
-  $$('[data-shelf]').forEach(b => b.addEventListener('click', () =>
-    packs.scrollBy({left: shelfStep() * +b.dataset.shelf, behavior: reduce ? 'auto' : 'smooth'})));
-  packs.addEventListener('scroll', shelfEnds, {passive:true});
-  addEventListener('resize', shelfEnds);
-  shelfEnds();
+const store = { q:'', cat:'', tags:new Set(), sort:'featured' };
+let applyStore = () => {};
+if (packs) {
+  packs.innerHTML = PACKS.map(packCard).join('');
+  const cardOf = id => document.getElementById('pack-' + id);
+  const search = $('#packSearch'), sort = $('#packSort'), cats = $('#packCats'), tagBox = $('#packTags');
+  const count = $('#packCount'), clear = $('#packClear'), empty = $('#packEmpty');
+  const allCats = [...new Set(PACKS.map(p => p.cat))];
+  const tagCount = new Map();
+  PACKS.forEach(p => (p.tags || []).forEach(t => tagCount.set(t, (tagCount.get(t) || 0) + 1)));
+  const allTags = [...tagCount.keys()].sort((a, b) => tagCount.get(b) - tagCount.get(a) || a.localeCompare(b));
+  const SORTS = {
+    featured: () => 0,
+    'price-asc': (a, b) => (hasPrice(a) ? a.price : Infinity) - (hasPrice(b) ? b.price : Infinity),
+    'price-desc': (a, b) => (hasPrice(a) ? -a.price : Infinity) - (hasPrice(b) ? -b.price : Infinity),
+    name: (a, b) => a.name.localeCompare(b.name)
+  };
+  // Filters can arrive in the address (?q=staff&cat=Weapons&tags=magic,crystal&sort=price-asc), so a filtered view
+  // can be shared; a #pack- link ignores them so its pack is always on show.
+  const params = new URLSearchParams(location.search);
+  if (!/^#pack-/.test(location.hash)) {
+    store.q = params.get('q') || '';
+    if (allCats.includes(params.get('cat'))) store.cat = params.get('cat');
+    (params.get('tags') || '').split(',').filter(t => tagCount.has(t)).forEach(t => store.tags.add(t));
+    if (SORTS[params.get('sort')]) store.sort = params.get('sort');
+  }
+  const chip = (label, attr, n) => `<button class="chip px" type="button" ${attr} aria-pressed="false">${esc(label)}${n != null ? `<span class="n">${n}</span>` : ''}</button>`;
+  cats.innerHTML = chip('All', 'data-cat=""', PACKS.length) + allCats.map(c => chip(c, `data-cat="${esc(c)}"`, PACKS.filter(p => p.cat === c).length)).join('');
+  // On phones only the first few tags show until "More tags" opens the rest (see .more-tags in the CSS).
+  tagBox.innerHTML = allTags.map(t => chip('#' + t, `data-tag="${esc(t)}"`)).join('') +
+    `<button class="chip px more-tags" type="button" aria-expanded="false">More tags</button>`;
+  $('.more-tags', tagBox).addEventListener('click', e => {
+    const open = tagBox.classList.toggle('open');
+    e.currentTarget.setAttribute('aria-expanded', String(open));
+    e.currentTarget.textContent = open ? 'Fewer tags' : 'More tags';
+  });
+  const text = p => [p.name, p.cat, p.blurb, ...p.includes, ...(p.tags || [])].join(' ').toLowerCase();
+  const matches = p => {
+    const words = store.q.toLowerCase().split(/\s+/).filter(Boolean);
+    return (!store.cat || p.cat === store.cat) && [...store.tags].every(t => (p.tags || []).includes(t)) && words.every(w => text(p).includes(w));
+  };
+  applyStore = () => {
+    const shown = PACKS.filter(matches).sort(SORTS[store.sort]);
+    // Cards are reordered with CSS order rather than moved, so their Sketchfab viewers don't reload.
+    PACKS.forEach(p => { const c = cardOf(p.id); c.hidden = !shown.includes(p); c.style.order = shown.indexOf(p); });
+    $$('[data-cat]', cats).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cat === store.cat)));
+    $$('[data-tag]', tagBox).forEach(b => b.setAttribute('aria-pressed', String(store.tags.has(b.dataset.tag))));
+    if (search.value.trim() !== store.q) search.value = store.q;
+    sort.value = store.sort;
+    const filtered = store.q || store.cat || store.tags.size;
+    count.textContent = filtered ? `${shown.length} of ${PACKS.length} packs` : `${PACKS.length} packs`;
+    clear.hidden = !filtered;
+    empty.hidden = shown.length > 0;
+    const q = new URLSearchParams();
+    if (store.q) q.set('q', store.q);
+    if (store.cat) q.set('cat', store.cat);
+    if (store.tags.size) q.set('tags', [...store.tags].join(','));
+    if (store.sort !== 'featured') q.set('sort', store.sort);
+    history.replaceState(null, '', location.pathname + (q.size ? '?' + q : '') + location.hash);
+  };
+  let typing;
+  search.addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(() => { store.q = search.value.trim(); applyStore(); }, 120); });
+  sort.addEventListener('change', () => { store.sort = sort.value; applyStore(); });
+  cats.addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) { store.cat = b.dataset.cat; applyStore(); } });
+  tagBox.addEventListener('click', e => {
+    const b = e.target.closest('[data-tag]');
+    if (!b) return;
+    store.tags.has(b.dataset.tag) ? store.tags.delete(b.dataset.tag) : store.tags.add(b.dataset.tag);
+    applyStore();
+  });
+  $$('[data-clear]').forEach(b => b.addEventListener('click', () => {
+    Object.assign(store, { q:'', cat:'' });
+    store.tags.clear();
+    applyStore();
+    search.focus();
+  }));
+  packs.addEventListener('click', e => {
+    const v = e.target.closest('[data-view]');
+    if (v) openLightbox(PACK_SHOTS, PACK_SHOTS.findIndex(p => p.id === v.dataset.view));
+    // A card's own tags narrow the grid to that tag.
+    const t = e.target.closest('[data-tag]');
+    if (t) {
+      store.tags.add(t.dataset.tag);
+      applyStore();
+      $('.store-tools').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+    }
+  });
+  // "/" jumps to the search box from anywhere on the page.
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && $('#modal').hidden && !e.target.closest('input,textarea,select')) { e.preventDefault(); search.focus(); }
+  });
+  applyStore();
 }
 document.addEventListener('click', e => {
   const d = e.target.closest('[data-dm]'); if (d) openDM(packById(d.dataset.dm));
   if (e.target.closest('[data-dm-custom]')) openDM(null);
 });
-// On the store page this scrolls to the pack; from the home page it opens the store at that pack.
+// On the store page this scrolls to the pack (clearing any filter that hides it); from the home page it opens the
+// store at that pack.
 function goToPack(id){
   const card = document.getElementById('pack-' + id);
   if (!card) { location.href = 'store.html#pack-' + encodeURIComponent(id); return; }
+  if (card.hidden) { Object.assign(store, { q:'', cat:'' }); store.tags.clear(); applyStore(); }
   card.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start', inline:'start'});
 }
 

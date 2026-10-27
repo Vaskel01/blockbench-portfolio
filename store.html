@@ -28,10 +28,34 @@
         </div>
         <div class="store-side">
           <p class="paywith"><span class="label">Payment</span><span class="pay px">PayPal</span><span class="pay px">GCash · PH</span></p>
-          <div class="shelf-nav"><button class="btn btn-sm px" type="button" data-shelf="-1" aria-label="Previous packs">←</button><button class="btn btn-sm px" type="button" data-shelf="1" aria-label="More packs">→</button></div>
         </div>
       </header>
-      <div class="cards" id="packs" tabindex="0" aria-label="Premade packs, scroll sideways for more"></div>
+      <div class="store-tools px" role="search" aria-label="Find a pack">
+        <div class="store-row">
+          <label class="search px">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 1h3v1h1v1h1v1h1v3h-1v1h-1v1h-1v1h-3v-1h-1v-1h-1v-1h-1V4h1V3h1V2h1zm0 2v1h-1v3h1v1h3V7h1V4h-1V3zm4.5 7h1v1h1v1h1v1h1v2h-2v-1h-1v-1h-1v-1h-1v-1h1z" fill="currentColor"/></svg>
+            <input id="packSearch" type="search" placeholder="Search packs, items or tags" aria-label="Search packs" autocomplete="off" spellcheck="false">
+            <kbd class="px" aria-hidden="true">/</kbd>
+          </label>
+          <label class="sort"><span class="label">Sort</span>
+            <select id="packSort" class="px">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="name">Name: A to Z</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" id="packCats" role="group" aria-label="Category"></div>
+        <div class="chips tags" id="packTags" role="group" aria-label="Tags"></div>
+        <div class="store-status"><p id="packCount" role="status"></p><button class="btn btn-sm px" type="button" id="packClear" data-clear hidden>Clear filters</button></div>
+      </div>
+      <div class="cards" id="packs" aria-label="Premade packs"></div>
+      <div class="empty px" id="packEmpty" hidden>
+        <h3>No packs match that</h3>
+        <p>Try another word or tag, or ask me for something custom.</p>
+        <div class="empty-actions"><button class="btn btn-sm px" type="button" data-clear>Clear filters</button><button class="btn btn-sm btn-primary px" type="button" data-dm-custom>DM me</button></div>
+      </div>
     </div>
   </section>
 
