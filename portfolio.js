@@ -14,7 +14,7 @@ const SITE = {
 };
 
 // Badge color per category
-const CAT = { "Weapons":"var(--red)", "Tools":"var(--blue)", "Props":"#d9861c", "Pets":"var(--purple)", "Items & props":"#2a9d80" };
+const CAT = { "Weapons":"var(--red)", "Tools":"var(--blue)", "Props":"#d9861c", "Pets":"var(--purple)", "Items & props":"#2a9d80", "Scenes":"#c0408a" };
 
 // price: a number like 15, or null to show "Ask for price".
 // buy:   a checkout link (Gumroad, Payhip, Ko-fi...) adds a "Buy now" button. "" = buy through Discord.
@@ -54,6 +54,9 @@ const PACKS = [
 
 // Portfolio, in order. Use a pack id to reuse that pack's render, or give an image for work that isn't for sale.
 const WORK_LIST = [
+  { img:"renders/scene-wushu.webp", name:"Wushu courtyard duel", cat:"Scenes", bg:"#c9d3dc", alt:"A martial artist in red silk flies into a side kick against a fighter in blue who blocks with a staff, in a temple courtyard with red pillars, lanterns, a plum tree in blossom and a weapon rack" },
+  { img:"renders/scene-rooftops.webp", name:"Rooftop run", cat:"Scenes", bg:"#5e4680", alt:"A runner in a hooded jacket leaps across the gap between two rooftops at sunset, above a street of infected and burnt-out cars, with a UV lamp glowing on the roof behind" },
+  { img:"renders/scene-dark-hour.webp", name:"The Dark Hour", cat:"Scenes", bg:"#0e2a1a", alt:"A student in a dark school blazer with headphones and a sword stands among coffins and red puddles as a glowing spirit rises behind him, under a giant moon and a twisting tower" },
   { pack:"adventurer" },
   { pack:"wushu" },
   { img:"renders/pets.webp", name:"Companion pets", cat:"Pets", bg:"#64a8e5", sketchfab:"e3bf7e8e37a14b5fbaff6853f5dc1d0a", alt:"Six cute creature models including a penguin, a pink bunny and a flame spirit" },

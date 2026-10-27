@@ -5,17 +5,20 @@
   "scripts": {
     "build": "node tools/build.mjs",
     "watch": "node tools/build.mjs --watch",
-    "render:workshop": "node tools/render-workshop.mjs"
+    "render:workshop": "node tools/render-scene.mjs workshop",
+    "render:scene": "node tools/render-scene.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "8.17.10",
     "@react-three/postprocessing": "2.16.3",
+    "postprocessing": "6.39.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "three": "0.169.0",
-    "postprocessing": "6.39.5"
+    "three": "0.169.0"
   },
   "devDependencies": {
-    "esbuild": "0.24.0"
+    "esbuild": "0.24.0",
+    "three-gpu-pathtracer": "0.0.23",
+    "three-mesh-bvh": "0.8.3"
   }
 }
